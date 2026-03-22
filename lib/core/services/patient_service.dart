@@ -6,6 +6,7 @@ import '../../models/patient.dart';
 class PatientService {
   static final List<String> _assetFiles = [
     'data/Patient001_1_data.v10.json',
+    'data/Patient002_1_data.v10.json',
     'data/Patient004_1_data_v10.json',
     'data/Patient005_1_data_v10.json',
   ];

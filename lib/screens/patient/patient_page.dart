@@ -300,8 +300,12 @@ class _PatientPageState extends State<PatientPage> {
                           _tableRow('Smoking', social['smoking'], labelStyle, valueStyle),
                         if (social['alcohol'] != null)
                           _tableRow('Alcohol', social['alcohol'], labelStyle, valueStyle),
-                        if ((social['allergies'] as List?)?.isNotEmpty == true)
-                          _tableRow('Allergies', (social['allergies'] as List).join(', '), labelStyle, valueStyle),
+                        if (social['allergies'] != null)
+                          _tableRow('Allergies',
+                            social['allergies'] is List
+                              ? (social['allergies'] as List).join(', ')
+                              : social['allergies'].toString(),
+                            labelStyle, valueStyle),
                       ],
                     ),
                   ),
@@ -418,17 +422,47 @@ class _PatientPageState extends State<PatientPage> {
       entries.add({'_type': 'instructions', 'data': instructions});
     }
 
-    final labs = visit['labs'] as List<dynamic>?;
-    if (labs != null && labs.isNotEmpty) {
-      final sortedLabs = List<Map<String, dynamic>>.from(
-        labs.map((l) => l as Map<String, dynamic>),
+    // Labs can be a List of lab objects OR a Map with date + panels
+    final labsRaw = visit['labs'];
+    final labList = <Map<String, dynamic>>[];
+    if (labsRaw is List) {
+      labList.addAll(labsRaw.map((l) => l as Map<String, dynamic>));
+    } else if (labsRaw is Map) {
+      final date = labsRaw['date'] ?? '';
+      final panels = labsRaw['panels'] as Map<String, dynamic>?;
+      if (panels != null) {
+        for (final entry in panels.entries) {
+          labList.add({
+            'type': entry.key,
+            'date': date,
+            'results': entry.value,
+          });
+        }
+      }
+    }
+    if (labList.isNotEmpty) {
+      labList.sort((a, b) {
+        final dateA = _parseDate(a['date'] ?? '');
+        final dateB = _parseDate(b['date'] ?? '');
+        return dateB.compareTo(dateA);
+      });
+      for (final lab in labList) {
+        entries.add({'_type': 'lab', ...lab});
+      }
+    }
+
+    // Imaging as a separate field (some patients have it outside labs)
+    final imaging = visit['imaging'] as List<dynamic>?;
+    if (imaging != null && imaging.isNotEmpty) {
+      final sortedImaging = List<Map<String, dynamic>>.from(
+        imaging.map((i) => i as Map<String, dynamic>),
       )..sort((a, b) {
           final dateA = _parseDate(a['date'] ?? '');
           final dateB = _parseDate(b['date'] ?? '');
           return dateB.compareTo(dateA);
         });
-      for (final lab in sortedLabs) {
-        entries.add({'_type': 'lab', ...lab});
+      for (final img in sortedImaging) {
+        entries.add({'_type': 'lab', ...img});
       }
     }
 
