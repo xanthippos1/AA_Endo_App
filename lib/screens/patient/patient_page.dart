@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../models/patient.dart';
+import '../../core/services/patient_service.dart';
 
 class PatientPage extends StatefulWidget {
   final Patient? patient;
@@ -14,6 +15,20 @@ class _PatientPageState extends State<PatientPage> {
   Map<String, dynamic>? _selectedVisit;
   String? _selectedSection; // 'family' or 'gynecological'
   int? _expandedDetailIndex; // which visit detail item is expanded
+  int _imageCount = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadImageCount();
+  }
+
+  void _loadImageCount() {
+    if (widget.patient == null) return;
+    PatientService.getImageCount(widget.patient!.patientId).then((count) {
+      if (mounted) setState(() => _imageCount = count);
+    });
+  }
 
   void _goBack() {
     setState(() {
@@ -33,6 +48,8 @@ class _PatientPageState extends State<PatientPage> {
       _selectedVisit = null;
       _selectedSection = null;
       _expandedDetailIndex = null;
+      _imageCount = 0;
+      _loadImageCount();
     }
   }
 
@@ -51,14 +68,17 @@ class _PatientPageState extends State<PatientPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8, top: 8),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton.icon(
-                  onPressed: _goBack,
-                  icon: const Icon(Icons.arrow_back),
-                  label: const Text('Back to visits'),
-                ),
+              padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+              child: Row(
+                children: [
+                  TextButton.icon(
+                    onPressed: _goBack,
+                    icon: const Icon(Icons.arrow_back),
+                    label: const Text('Back to visits'),
+                  ),
+                  const Spacer(),
+                  _buildImageButtons(),
+                ],
               ),
             ),
             Expanded(
@@ -85,14 +105,17 @@ class _PatientPageState extends State<PatientPage> {
         child: Column(
           children: [
             Padding(
-              padding: const EdgeInsets.only(left: 8, top: 8),
-              child: Align(
-                alignment: Alignment.centerLeft,
-                child: TextButton.icon(
-                  onPressed: _goBack,
-                  icon: const Icon(Icons.arrow_back),
-                  label: const Text('Back to visits'),
-                ),
+              padding: const EdgeInsets.only(left: 8, top: 8, right: 8),
+              child: Row(
+                children: [
+                  TextButton.icon(
+                    onPressed: _goBack,
+                    icon: const Icon(Icons.arrow_back),
+                    label: const Text('Back to visits'),
+                  ),
+                  const Spacer(),
+                  _buildImageButtons(),
+                ],
               ),
             ),
             Expanded(
@@ -121,9 +144,16 @@ class _PatientPageState extends State<PatientPage> {
       children: [
         Padding(
           padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
-          child: Text(
-            widget.patient!.name,
-            style: Theme.of(context).textTheme.headlineSmall,
+          child: Row(
+            children: [
+              Expanded(
+                child: Text(
+                  widget.patient!.name,
+                  style: Theme.of(context).textTheme.headlineSmall,
+                ),
+              ),
+              _buildImageButtons(),
+            ],
           ),
         ),
         Expanded(
@@ -169,6 +199,64 @@ class _PatientPageState extends State<PatientPage> {
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildImageButtons() {
+    if (_imageCount == 0) return const SizedBox.shrink();
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        for (int i = 1; i <= _imageCount; i++)
+          Padding(
+            padding: const EdgeInsets.only(left: 4),
+            child: SizedBox(
+              width: 32,
+              height: 32,
+              child: OutlinedButton(
+                style: OutlinedButton.styleFrom(
+                  padding: EdgeInsets.zero,
+                  side: BorderSide(color: Theme.of(context).colorScheme.primary),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                ),
+                onPressed: () => _showImage(i),
+                child: Text(
+                  '$i',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Theme.of(context).colorScheme.primary,
+                  ),
+                ),
+              ),
+            ),
+          ),
+      ],
+    );
+  }
+
+  void _showImage(int imageNumber) {
+    final patientId = widget.patient!.patientId;
+    final assetPath = 'jpeg_images/${patientId}_$imageNumber.jpg';
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => Scaffold(
+          backgroundColor: Colors.black,
+          appBar: AppBar(
+            backgroundColor: Colors.black,
+            iconTheme: const IconThemeData(color: Colors.white),
+          ),
+          body: Center(
+            child: Image.asset(
+              assetPath,
+              fit: BoxFit.contain,
+              width: double.infinity,
+              height: double.infinity,
+            ),
+          ),
+        ),
+      ),
     );
   }
 

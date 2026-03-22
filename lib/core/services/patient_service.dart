@@ -28,4 +28,15 @@ class PatientService {
     final patients = await loadAllPatients();
     return patients.where((p) => p.amkaLast4 == last4).toList();
   }
+
+  /// Returns how many JPEG images exist for the given patient ID.
+  /// Images follow the pattern: jpeg_images/PatientXXX_N.jpg
+  static Future<int> getImageCount(String patientId) async {
+    final manifestJson = await rootBundle.loadString('AssetManifest.json');
+    final manifest = json.decode(manifestJson) as Map<String, dynamic>;
+    final prefix = 'jpeg_images/${patientId}_';
+    return manifest.keys
+        .where((key) => key.startsWith(prefix) && key.endsWith('.jpg'))
+        .length;
+  }
 }
