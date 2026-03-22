@@ -31,12 +31,19 @@ class PatientService {
 
   /// Returns how many JPEG images exist for the given patient ID.
   /// Images follow the pattern: jpeg_images/PatientXXX_N.jpg
+  /// Tries loading sequentially from 1 until one fails.
   static Future<int> getImageCount(String patientId) async {
-    final manifestJson = await rootBundle.loadString('AssetManifest.json');
-    final manifest = json.decode(manifestJson) as Map<String, dynamic>;
-    final prefix = 'jpeg_images/${patientId}_';
-    return manifest.keys
-        .where((key) => key.startsWith(prefix) && key.endsWith('.jpg'))
-        .length;
+    int count = 0;
+    for (int i = 1; i <= 20; i++) {
+      try {
+        final path = 'jpeg_images/${patientId}_$i.jpg';
+        await rootBundle.load(path);
+        count = i;
+      } catch (_) {
+        break;
+      }
+    }
+    log('Image count for $patientId: $count');
+    return count;
   }
 }

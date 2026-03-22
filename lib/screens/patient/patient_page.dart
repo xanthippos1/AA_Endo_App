@@ -15,6 +15,7 @@ class _PatientPageState extends State<PatientPage> {
   Map<String, dynamic>? _selectedVisit;
   String? _selectedSection; // 'family' or 'gynecological'
   int? _expandedDetailIndex; // which visit detail item is expanded
+  bool _expandAll = false;
   int _imageCount = 0;
 
   @override
@@ -37,6 +38,7 @@ class _PatientPageState extends State<PatientPage> {
       } else if (_selectedVisit != null) {
         _selectedVisit = null;
         _expandedDetailIndex = null;
+        _expandAll = false;
       }
     });
   }
@@ -192,6 +194,7 @@ class _PatientPageState extends State<PatientPage> {
               setState(() {
                 _selectedVisit = visit as Map<String, dynamic>;
                 _expandedDetailIndex = null;
+                _expandAll = false;
               });
             },
           ),
@@ -442,9 +445,25 @@ class _PatientPageState extends State<PatientPage> {
   List<Widget> _buildVisitDetailItems() {
     final visit = _selectedVisit!;
     final items = <Widget>[
-      Text(
-        'Visit ${visit['visit_number']} — ${visit['date']}',
-        style: Theme.of(context).textTheme.titleMedium,
+      Row(
+        children: [
+          Expanded(
+            child: Text(
+              'Visit ${visit['visit_number']} — ${visit['date']}',
+              style: Theme.of(context).textTheme.titleMedium,
+            ),
+          ),
+          TextButton.icon(
+            onPressed: () {
+              setState(() {
+                _expandAll = !_expandAll;
+                _expandedDetailIndex = null;
+              });
+            },
+            icon: Icon(_expandAll ? Icons.unfold_less : Icons.unfold_more, size: 18),
+            label: Text(_expandAll ? 'Collapse' : 'Expand All', style: const TextStyle(fontSize: 12)),
+          ),
+        ],
       ),
       const SizedBox(height: 8),
     ];
@@ -459,7 +478,7 @@ class _PatientPageState extends State<PatientPage> {
     for (int i = 0; i < entries.length; i++) {
       final entry = entries[i];
       final type = entry['_type'] as String;
-      final isExpanded = _expandedDetailIndex == i;
+      final isExpanded = _expandAll || _expandedDetailIndex == i;
 
       // List tile for each entry
       switch (type) {
