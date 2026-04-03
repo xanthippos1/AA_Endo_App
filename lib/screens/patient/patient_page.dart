@@ -184,23 +184,12 @@ class _PatientPageState extends State<PatientPage> {
 
   void _showImage(int imageNumber) {
     final patientId = widget.patient!.patientId;
-    final assetPath = 'jpeg_images/${patientId}_$imageNumber.jpg';
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => Scaffold(
-          backgroundColor: Colors.black,
-          appBar: AppBar(
-            backgroundColor: Colors.black,
-            iconTheme: const IconThemeData(color: Colors.white),
-          ),
-          body: Center(
-            child: Image.asset(
-              assetPath,
-              fit: BoxFit.contain,
-              width: double.infinity,
-              height: double.infinity,
-            ),
-          ),
+        builder: (_) => _ImageViewer(
+          patientId: patientId,
+          imageCount: _imageCount,
+          initialPage: imageNumber,
         ),
       ),
     );
@@ -1088,5 +1077,118 @@ class _PatientPageState extends State<PatientPage> {
     } catch (_) {
       return DateTime(1900);
     }
+  }
+}
+
+class _ImageViewer extends StatefulWidget {
+  final String patientId;
+  final int imageCount;
+  final int initialPage;
+
+  const _ImageViewer({
+    required this.patientId,
+    required this.imageCount,
+    required this.initialPage,
+  });
+
+  @override
+  State<_ImageViewer> createState() => _ImageViewerState();
+}
+
+class _ImageViewerState extends State<_ImageViewer> {
+  late PageController _pageController;
+  late int _currentPage;
+
+  @override
+  void initState() {
+    super.initState();
+    _currentPage = widget.initialPage;
+    _pageController = PageController(initialPage: widget.initialPage - 1);
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
+
+  bool get _isDesktop {
+    final platform = Theme.of(context).platform;
+    return platform == TargetPlatform.windows ||
+        platform == TargetPlatform.macOS ||
+        platform == TargetPlatform.linux;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        backgroundColor: Colors.black,
+        iconTheme: const IconThemeData(color: Colors.white),
+        title: Text(
+          '$_currentPage / ${widget.imageCount}',
+          style: const TextStyle(color: Colors.white, fontSize: 16),
+        ),
+      ),
+      body: Stack(
+        children: [
+          PageView.builder(
+            controller: _pageController,
+            itemCount: widget.imageCount,
+            onPageChanged: (index) {
+              setState(() => _currentPage = index + 1);
+            },
+            itemBuilder: (context, index) {
+              final assetPath = 'jpeg_images/${widget.patientId}_${index + 1}.jpg';
+              return Center(
+                child: Image.asset(
+                  assetPath,
+                  fit: BoxFit.contain,
+                  width: double.infinity,
+                  height: double.infinity,
+                ),
+              );
+            },
+          ),
+          if (_isDesktop) ...[
+            if (_currentPage > 1)
+              Positioned(
+                left: 8,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_back_ios, color: Colors.white70, size: 32),
+                    onPressed: () {
+                      _pageController.previousPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                  ),
+                ),
+              ),
+            if (_currentPage < widget.imageCount)
+              Positioned(
+                right: 8,
+                top: 0,
+                bottom: 0,
+                child: Center(
+                  child: IconButton(
+                    icon: const Icon(Icons.arrow_forward_ios, color: Colors.white70, size: 32),
+                    onPressed: () {
+                      _pageController.nextPage(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
+                    },
+                  ),
+                ),
+              ),
+          ],
+        ],
+      ),
+    );
   }
 }

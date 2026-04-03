@@ -54,3 +54,7 @@
 - Instructions -> ΟΔΗΓΙΕΣ
 - clinical_exam -> ΚΛΙΝΙΚΗ ΕΞΕΤΑΣΗ
 
+# TASK 2: handwritten notes navigation
+
+- when selecting the handwritten notes from one of the buttons above, after a page appears, allow the user to scroll left or right to get to previous or next page. On iPad iPhone allow that to happen with scrolling with window, on Windows/Mac allow it to happen by adding a right left arrow that can be pressed accordingly
+
