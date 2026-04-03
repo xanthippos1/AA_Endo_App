@@ -43,8 +43,6 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-# Build output
-build/
 
 # Flutter generated
 .flutter-plugins

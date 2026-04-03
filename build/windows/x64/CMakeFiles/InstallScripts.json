@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/cmake_install.cmake",
+		"C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/flutter/cmake_install.cmake",
+		"C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/cmake_install.cmake"
+	],
+	"Parallel" : false
+}
