@@ -3,10 +3,11 @@ C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/flutter_wind
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/AssetManifest.bin.json
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/labels.json
-C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/Patient001_1_data.v10.json
-C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/Patient002_1_data.v10.json
+C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/Patient001_1_data_v10.json
+C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/Patient002_1_data_v10.json
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/Patient004_1_data_v10.json
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/Patient005_1_data_v10.json
+C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/data/patient_manifest.json
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/FontManifest.json
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/fonts/MaterialIcons-Regular.otf
 C:/Users/xanar/Documents/AA_Endo_App/build/windows/x64/runner/Debug/data/flutter_assets/jpeg_images/Patient001_1.jpg

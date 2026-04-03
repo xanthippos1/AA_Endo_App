@@ -4,16 +4,20 @@ import 'package:flutter/services.dart';
 import '../../models/patient.dart';
 
 class PatientService {
-  static final List<String> _assetFiles = [
-    'data/Patient001_1_data.v10.json',
-    'data/Patient002_1_data.v10.json',
-    'data/Patient004_1_data_v10.json',
-    'data/Patient005_1_data_v10.json',
-  ];
+  Future<List<String>> _loadManifest() async {
+    try {
+      final jsonString = await rootBundle.loadString('data/patient_manifest.json');
+      return List<String>.from(json.decode(jsonString));
+    } catch (e) {
+      log('Error loading patient manifest: $e');
+      return [];
+    }
+  }
 
   Future<List<Patient>> loadAllPatients() async {
+    final assetFiles = await _loadManifest();
     final patients = <Patient>[];
-    for (final path in _assetFiles) {
+    for (final path in assetFiles) {
       try {
         final jsonString = await rootBundle.loadString(path);
         final data = json.decode(jsonString) as Map<String, dynamic>;
