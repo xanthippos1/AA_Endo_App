@@ -1,0 +1,177 @@
+{
+  "_schema": "endo-data-v1",
+  "patient_id": "PatientXXX",
+  "source": "gemini_response/PatientXXX_gemini31.txt",
+  "generated": "YYYY-MM-DD",
+  "version": "v10",
+
+  "identity": {
+    "name": "from id.json",
+    "dob": "DD/MM/YYYY",
+    "age_at_first_visit": 26,
+    "address": "from id.json",
+    "phone": "from id.json",
+    "amka": "*******XXXX"
+  },
+
+  "social": {
+    "profession": "string",
+    "smoking": "string or Ø",
+    "alcohol": "string or Ø",
+    "allergies": ["DRUG1", "DRUG2"]
+  },
+
+  "presenting_illness": [
+    "CONDITION1",
+    "CONDITION2"
+  ],
+
+  "referral": {
+    "from": "name",
+    "relation": "σύζυγος | φίλη | specialty etc."
+  },
+
+  "medical_history": [
+    { "item": "CONDITION or description", "year": 2018, "detail": "optional extra info", "uncertain": false }
+  ],
+
+  "gynecological_history": {
+    "menarche_age": 13,
+    "cycle": "28/7",
+    "menopause_age": 48,
+    "marriage_age": 27,
+    "deliveries": "2 κφ",
+    "miscarriages": "Ø",
+    "abortions": "Ø",
+    "first_pregnancy_age": 22,
+    "fertility_age": 40,
+    "other": "optional notes"
+  },
+
+  "family_history": {
+    "father": {
+      "age": 64,
+      "status": "living | deceased",
+      "conditions": ["CONDITION1", "CONDITION2"]
+    },
+    "mother": {
+      "age": 56,
+      "status": "living | deceased",
+      "conditions": ["CONDITION1"]
+    },
+    "siblings": [
+      { "relation": "Αδελφή", "age": 30, "conditions": ["CONDITION1"] }
+    ],
+    "spouse": {
+      "status": "living | deceased",
+      "conditions": ["CONDITION1"]
+    },
+    "patient_summary": ["CONDITION1"]
+  },
+
+  "latest_medication": [
+    { "name": "DRUG_NAME", "dose": "40mg", "frequency": "x1" }
+  ],
+
+  "visits": [
+    {
+      "visit_number": 1,
+      "date": "DD/MM/YYYY",
+      "type": "in-person | e-mail | phone",
+      "date_uncertain": false,
+
+      "current_medication": [
+        { "name": "DRUG_NAME", "dose": "40mg", "frequency": "x1", "uncertain": false }
+      ],
+
+      "clinical_exam": {
+        "weight_kg": 67,
+        "height_cm": 182,
+        "bp": "110/70",
+        "bp_home": "125-140/60-70",
+        "pulse": 60,
+        "note": "optional free-text note",
+        "findings": [
+          { "system": "Καρδιά", "value": "S1, S2, SR, κφ", "uncertain": false }
+        ]
+      },
+
+      "labs": [
+        {
+          "type": "cbc",
+          "date": "DD/MM/YYYY",
+          "label": "optional label",
+          "note": "optional note e.g. Άνευ αγωγής",
+          "results": [
+            { "test": "WBC", "value": "6800", "ref_range": "", "flag": null, "note": "", "uncertain": false }
+          ]
+        },
+        {
+          "type": "biochemistry",
+          "date": "DD/MM/YYYY",
+          "results": [
+            { "test": "Glu", "value": "92", "ref_range": "", "flag": null }
+          ]
+        },
+        {
+          "type": "lipids",
+          "date": "DD/MM/YYYY",
+          "results": [
+            { "test": "CHOL", "value": "206", "ref_range": "", "flag": "HIGH" }
+          ]
+        },
+        {
+          "type": "thyroid",
+          "date": "DD/MM/YYYY",
+          "results": [
+            { "test": "TSH", "value": "4,77", "ref_range": "0,27-4,2", "flag": "HIGH" }
+          ]
+        },
+        {
+          "type": "hormonal",
+          "date": "DD/MM/YYYY",
+          "results": [
+            { "test": "F (Κορτιζόλη)", "value": "21,5", "ref_range": "", "flag": null }
+          ]
+        },
+        {
+          "type": "urinalysis",
+          "date": "DD/MM/YYYY",
+          "results": [
+            { "test": "pH", "value": "6", "ref_range": "", "flag": null }
+          ]
+        },
+        {
+          "type": "imaging",
+          "date": "DD/MM/YYYY",
+          "description": "ECHO ΘΥΡΕΟΕΙΔΟΥΣ",
+          "findings": [
+            "Finding line 1",
+            "Finding line 2"
+          ]
+        },
+        {
+          "type": "cytology",
+          "date": "DD/MM/YYYY",
+          "description": "FNA ΘΥΡΕΟΕΙΔΟΥΣ",
+          "findings": [
+            "Finding line 1"
+          ]
+        }
+      ],
+
+      "diagnosis": [
+        "CONDITION1"
+      ],
+
+      "notes": [
+        "Free-text note"
+      ],
+
+      "instructions": [
+        "Instruction 1",
+        "Instruction 2"
+      ]
+    }
+  ]
+}

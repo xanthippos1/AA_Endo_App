@@ -42,3 +42,14 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+
+# Build output
+build/
+
+# Flutter generated
+.flutter-plugins
+.metadata
+*.iml
+
+# Claude Code local config
+.claude/

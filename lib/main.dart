@@ -2,8 +2,11 @@ import 'package:flutter/material.dart';
 import 'models/patient.dart';
 import 'screens/search/search_page.dart';
 import 'screens/patient/patient_page.dart';
+import 'core/services/label_service.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await LabelService.load();
   runApp(const MyApp());
 }
 
