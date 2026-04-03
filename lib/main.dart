@@ -3,9 +3,11 @@ import 'models/patient.dart';
 import 'screens/search/search_page.dart';
 import 'screens/patient/patient_page.dart';
 import 'core/services/label_service.dart';
+import 'core/services/supabase_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SupabaseService.initialize();
   await LabelService.load();
   runApp(const MyApp());
 }

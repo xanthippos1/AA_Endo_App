@@ -58,3 +58,14 @@
 
 - when selecting the handwritten notes from one of the buttons above, after a page appears, allow the user to scroll left or right to get to previous or next page. On iPad iPhone allow that to happen with scrolling with window, on Windows/Mac allow it to happen by adding a right left arrow that can be pressed accordingly
 
+# TASK 3:  New Patient Tab - Personal information
+
+- When clikcing on 'New' tab bring up entry forms to enter 'identity', 'social', 'presenting_illness', 'referral'. I'm not sure about the best way to do this so I'll need your guidance.
+- Think carefully about different options that can be implemented in dart fairly easily and that are very user friendly. 
+- Utilize best practices for this type of physician entry application.
+- The output should be stored in a .json file that should be labeled ./data/PatientNNN_2_data_v10.json where the NNN is incremented from the last patient that was there. The _2_ signifies that this data is generated from this app rather than the gemini response/transcipt from handwritten notes.
+- endo-app-v1
+- https://mjaplyzvhffxuxhsioyp.supabase.co
+- anon public key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qYXBseXp2aGZmeHV4aHNpb3lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMzc1NzcsImV4cCI6MjA5MDgxMzU3N30.UJXUzMLOJ-MGvfhcfHvIKWkF0X_GmZb909Z2oKKRPFY
+
+
