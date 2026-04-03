@@ -24,6 +24,14 @@ class PatientService {
     return patients.where((p) => p.amkaLast4 == last4).toList();
   }
 
+  Future<Patient?> findByFullAmka(String amka) async {
+    final patients = await loadAllPatients();
+    for (final p in patients) {
+      if (p.amka == amka) return p;
+    }
+    return null;
+  }
+
   Future<void> savePatient(Patient patient) async {
     try {
       await SupabaseService.client.from('patients').upsert({

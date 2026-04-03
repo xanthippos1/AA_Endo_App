@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'models/patient.dart';
 import 'screens/search/search_page.dart';
 import 'screens/patient/patient_page.dart';
+import 'screens/new_patient/new_patient_page.dart';
 import 'core/services/label_service.dart';
 import 'core/services/supabase_service.dart';
 
@@ -46,7 +47,12 @@ class _MainScreenState extends State<MainScreen> {
       });
     }),
     PatientPage(patient: _selectedPatient),
-    const Center(child: Text('New')),
+    NewPatientPage(onPatientSaved: (patient) {
+      setState(() {
+        _selectedPatient = patient;
+        _selectedIndex = 1;
+      });
+    }),
     const Center(child: Text('Date')),
   ];
 

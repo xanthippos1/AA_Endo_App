@@ -1,3 +1,24 @@
+
+
+# general
+- endo-app-v1
+- https://mjaplyzvhffxuxhsioyp.supabase.co
+- anon public key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qYXBseXp2aGZmeHV4aHNpb3lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMzc1NzcsImV4cCI6MjA5MDgxMzU3N30.UJXUzMLOJ-MGvfhcfHvIKWkF0X_GmZb909Z2oKKRPFY
+
+# sample new patient data (ignore)
+
+Ξάνθιππος Μαγνήσαλης
+15/04/1933
+11111111111
+Βας. Ολγας 33, Θεσσαλονικη, 54641
+2310 123456
+Συνταξιούχος
+40/ημέρα 16-40χρ
+Διαβήτης Α
+Ξάνθιππος Μαγνήσαλης
+Γιος
+
+
 # TASK 1: rename some titles to Greek
 
 - there is a template for the .json data file in example_data_template.json
@@ -64,8 +85,9 @@
 - Think carefully about different options that can be implemented in dart fairly easily and that are very user friendly. 
 - Utilize best practices for this type of physician entry application.
 - The output should be stored in a .json file that should be labeled ./data/PatientNNN_2_data_v10.json where the NNN is incremented from the last patient that was there. The _2_ signifies that this data is generated from this app rather than the gemini response/transcipt from handwritten notes.
-- endo-app-v1
-- https://mjaplyzvhffxuxhsioyp.supabase.co
-- anon public key: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1qYXBseXp2aGZmeHV4aHNpb3lwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUyMzc1NzcsImV4cCI6MjA5MDgxMzU3N30.UJXUzMLOJ-MGvfhcfHvIKWkF0X_GmZb909Z2oKKRPFY
 
+# TASK 4: New Petient Visit  - medical_history, family_history, latest_medication
 
+- At the end of the Personal Infromation entry, add three buttons: medical_history, family_history, latest_medication but with their greek translations.
+- As the user clicks then expand a section (keep the sections and buttons in that order)
+- Same principles as above, if any info is already there, have it appear in white. Anything we are editing yellow (until we save)

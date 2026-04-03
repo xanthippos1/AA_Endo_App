@@ -17,7 +17,7 @@ class Patient {
   String get address => identity['address'] ?? '';
   String get phone => identity['phone'] ?? '';
 
-  String get amkaLast4 => amka.replaceAll('*', '');
+  String get amkaLast4 => identity['amka4'] ?? '';
 
   Map<String, dynamic> get social => rawData['social'] ?? {};
   List<dynamic> get presentingIllness => rawData['presenting_illness'] ?? [];
@@ -27,11 +27,31 @@ class Patient {
   Map<String, dynamic> get gynecologicalHistory => rawData['gynecological_history'] ?? {};
 
   factory Patient.fromJson(Map<String, dynamic> json) {
+    final cast = _deepCast(json);
     return Patient(
-      patientId: json['patient_id'] ?? '',
-      identity: json['identity'] ?? {},
-      visits: json['visits'] ?? [],
-      rawData: json,
+      patientId: cast['patient_id'] ?? '',
+      identity: cast['identity'] ?? {},
+      visits: cast['visits'] ?? [],
+      rawData: cast,
     );
+  }
+
+  static Map<String, dynamic> _deepCast(Map data) {
+    return data.map((key, value) {
+      if (value is Map) {
+        return MapEntry(key.toString(), _deepCast(value));
+      } else if (value is List) {
+        return MapEntry(key.toString(), _deepCastList(value));
+      }
+      return MapEntry(key.toString(), value);
+    });
+  }
+
+  static List<dynamic> _deepCastList(List data) {
+    return data.map((item) {
+      if (item is Map) return _deepCast(item);
+      if (item is List) return _deepCastList(item);
+      return item;
+    }).toList();
   }
 }

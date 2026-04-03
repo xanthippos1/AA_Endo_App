@@ -570,42 +570,31 @@ class _PatientPageState extends State<PatientPage> {
 
   // Level 4: latest_medication (across full width)
   Widget _buildLevel4(BuildContext context, Patient patient, TextStyle? labelStyle, TextStyle? valueStyle) {
-    // Get current_medication from the most recent visit (highest visit_number)
+    // Use current_medication from the most recent visit if available,
+    // otherwise fall back to top-level latest_medication
     final visits = patient.visits;
-    if (visits.isEmpty) return const SizedBox.shrink();
-
-    // Find the most recent visit that has current_medication
     List<dynamic>? latestMeds;
     String medDate = '';
 
-    // Check top-level latest_medication first
-    final topLevelMeds = patient.rawData['latest_medication'] as List<dynamic>?;
-    if (topLevelMeds != null && topLevelMeds.isNotEmpty) {
-      latestMeds = topLevelMeds;
-      // Find the date of the latest visit with medication
-      int highestNumber = -1;
-      for (final v in visits) {
-        final meds = v['current_medication'] as List<dynamic>?;
-        if (meds != null && meds.isNotEmpty) {
-          final num = (v['visit_number'] ?? 0) as int;
-          if (num > highestNumber) {
-            highestNumber = num;
-            medDate = v['date'] ?? '';
-          }
+    // First try: medication from the most recent visit
+    int highestNumber = -1;
+    for (final v in visits) {
+      final meds = v['current_medication'] as List<dynamic>?;
+      if (meds != null && meds.isNotEmpty) {
+        final num = (v['visit_number'] ?? 0) as int;
+        if (num > highestNumber) {
+          highestNumber = num;
+          latestMeds = meds;
+          medDate = v['date'] ?? '';
         }
       }
-    } else {
-      int highestNumber = -1;
-      for (final v in visits) {
-        final meds = v['current_medication'] as List<dynamic>?;
-        if (meds != null && meds.isNotEmpty) {
-          final num = (v['visit_number'] ?? 0) as int;
-          if (num > highestNumber) {
-            highestNumber = num;
-            latestMeds = meds;
-            medDate = v['date'] ?? '';
-          }
-        }
+    }
+
+    // Fallback: top-level latest_medication
+    if (latestMeds == null || latestMeds.isEmpty) {
+      final topLevelMeds = patient.rawData['latest_medication'] as List<dynamic>?;
+      if (topLevelMeds != null && topLevelMeds.isNotEmpty) {
+        latestMeds = topLevelMeds;
       }
     }
 
