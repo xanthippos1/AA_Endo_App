@@ -13,6 +13,7 @@ flutter run
 flutter analyze
 flutter test
 flutter test test/<file>   # single test
+flutter build web --pwa-strategy none
 ```
 
 ## Code Style
